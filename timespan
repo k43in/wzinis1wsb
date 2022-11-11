@@ -1,0 +1,76 @@
+ERROR1:
+
+try
+{
+    Console.WriteLine("podaj rok urodzenia ");
+    int year = int.Parse(Console.ReadLine());
+
+    if ( year > DateTime.Now.Year )
+    {
+        Console.WriteLine("ujemny rok belzedupie");
+        goto ERROR1;
+    }
+
+ERROR2:
+
+    Console.WriteLine("podaj miesiac urodzenia ");
+    int month = int.Parse(Console.ReadLine());
+    if (month <= 0 || month > 12)
+    {
+        Console.WriteLine("niewłaściwy miesiec");
+        goto ERROR2;
+    }
+ERROR3:
+    Console.WriteLine("podaj dzień urodzenia ");
+    int day = int.Parse(Console.ReadLine());
+    switch (month)
+    {
+        case 1 or 3 or 5 or 7 or 8 or 10 or 12:
+            if (day <= 0 || day > 31)
+            {
+                Console.WriteLine("ten miesiąc ma między 1 a 31 dni");
+                goto ERROR3;
+            }
+            break;
+
+        case 2:
+            if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+            {
+                if (day <= 0 || day > 29)
+                {
+                    Console.WriteLine("ten miesiąc ma miedzy 1 a 29 dni");
+                    goto ERROR3;
+                }
+            }
+            else if (day <= 0 || day > 28)
+            {
+                Console.WriteLine("ten miesiac ma miedzy 1 a 28 dni");
+                goto ERROR3;
+            }
+            break;
+
+        case 4 or 6 or 9 or 11:
+            if (day <= 0 || day > 30)
+            {
+                Console.WriteLine("ten miesiąc ma między 1 a 30 dni");
+                goto ERROR3;
+            }
+            break;
+    }
+    DateTime yearOfBirth = new DateTime(year, month, day);
+
+    TimeSpan daysSinceOfBirth = DateTime.Now - yearOfBirth;
+
+    Console.WriteLine($"masz {daysSinceOfBirth.Days} dni");
+    Console.WriteLine($"masz {daysSinceOfBirth.Days / 365} lat");
+}
+catch (ArgumentOutOfRangeException)
+{
+    Console.WriteLine("jak ty chcesz mieć ujemny rok albo mnieć wiek na minusie XD");
+    goto ERROR1;
+}
+catch (Exception)
+{
+    Console.WriteLine("Niewłaściwy format daty");
+    goto ERROR1;
+}
