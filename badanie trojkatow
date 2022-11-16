@@ -1,0 +1,81 @@
+skok1:
+Console.WriteLine("Podaj 1 bok trojkąta");
+int userInput1 = Convert.ToInt32(Console.ReadLine());
+if (userInput1 <= 0)
+{
+    Console.WriteLine("To nie może być bok trojkąta");
+        goto skok1;
+}
+
+
+skok2:
+Console.WriteLine("Podaj 2 bok trojkąta");
+int userInput2 = Convert.ToInt32(Console.ReadLine());
+if (userInput2 <= 0)
+{
+    Console.WriteLine("To nie może być bok trojkąta");
+        goto skok2;
+}
+
+skok3:
+Console.WriteLine("Podaj 3 bok trojkąta");
+int userInput3 = Convert.ToInt32(Console.ReadLine());
+if (userInput3 <= 0)
+{
+    Console.WriteLine("To nie może być bok trojkąta");
+    goto skok3;
+}
+
+
+int[] triangleValue = { userInput1, userInput2, userInput3 };
+double maxValue = triangleValue.Max();
+double minValue = triangleValue.Min();
+double? mediumValue = null;
+
+foreach (int triangle in triangleValue)
+{
+    if (triangle < maxValue && triangle > minValue)
+    {
+        mediumValue = triangle;
+    }
+}
+
+if(mediumValue.HasValue && (minValue+ mediumValue) < maxValue)
+{
+    Console.WriteLine("to nie moze być jest trojkat");
+    Console.WriteLine("");
+    goto skok1;
+}
+
+if (mediumValue == null && ((minValue * 2)<(maxValue)))
+{ 
+    Console.WriteLine("to nie jest trojkat");
+    goto skok1;
+}
+
+if (mediumValue != null && (minValue + mediumValue) >= maxValue)
+{
+
+    Console.WriteLine("to jest trojkat");
+        
+}
+else if (minValue == maxValue)
+{
+    mediumValue = maxValue;
+    Console.WriteLine("trojkat rownoboczny");
+}
+
+else if (!mediumValue.HasValue && ((minValue*2) < (2*maxValue)))
+{
+  
+    Console.WriteLine("trojkat rownoramienny");
+}
+
+else
+{
+    Console.WriteLine("to nie jest trojkat");
+}
+if (mediumValue.HasValue && Math.Pow(minValue, 2) + mediumValue*mediumValue == Math.Pow(maxValue, 2))
+{
+    Console.WriteLine("to równiez moze byc trojkat prostokatny");
+}
